@@ -1,0 +1,68 @@
+import React, { useState } from 'react'
+import { useBookings } from './hooks/useBookings'
+import { useToast } from './hooks/useToast'
+import { Toast } from './components/Toast'
+import { BookingForm } from './components/BookingForm'
+import { AdminPanel } from './components/AdminPanel'
+import type { TabView } from './types'
+import styles from './App.module.css'
+
+export default function App() {
+  const [tab, setTab] = useState<TabView>('reservar')
+  const { bookings, addBooking, deleteBooking, isSlotOccupied } = useBookings()
+  const { toast, showToast } = useToast()
+
+  const handleSubmit: Parameters<typeof BookingForm>[0]['onSubmit'] = (payload) => {
+    const result = addBooking(payload)
+    showToast(result.message, result.success ? 'success' : 'error')
+    return result
+  }
+
+  const handleDelete = (id: number) => {
+    deleteBooking(id)
+    showToast('Reserva cancelada', 'error')
+  }
+
+  return (
+    <div className={styles.root}>
+      <Toast {...toast} />
+
+      <header className={styles.header}>
+        <div className={styles.logo}>
+          <div className={styles.logoIcon}>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="rgb(255, 255, 255)" d="M199.2 181.4L173.1 256L466.9 256L440.8 181.4C436.3 168.6 424.2 160 410.6 160L229.4 160C215.8 160 203.7 168.6 199.2 181.4zM103.6 260.8L138.8 160.3C152.3 121.8 188.6 96 229.4 96L410.6 96C451.4 96 487.7 121.8 501.2 160.3L536.4 260.8C559.6 270.4 576 293.3 576 320L576 512C576 529.7 561.7 544 544 544L512 544C494.3 544 480 529.7 480 512L480 480L160 480L160 512C160 529.7 145.7 544 128 544L96 544C78.3 544 64 529.7 64 512L64 320C64 293.3 80.4 270.4 103.6 260.8zM192 368C192 350.3 177.7 336 160 336C142.3 336 128 350.3 128 368C128 385.7 142.3 400 160 400C177.7 400 192 385.7 192 368zM480 400C497.7 400 512 385.7 512 368C512 350.3 497.7 336 480 336C462.3 336 448 350.3 448 368C448 385.7 462.3 400 480 400z"/></svg>
+          </div>
+          <div>
+            <p className={styles.logoTitle}>Flash</p>
+            <p className={styles.logoSub}>Car Wash & Detailing</p>
+          </div>
+        </div>
+      </header>
+
+      <nav className={styles.tabBar}>
+        <button
+          type="button"
+          className={`${styles.tab} ${tab === 'reservar' ? styles.tabActive : ''}`}
+          onClick={() => setTab('reservar')}
+        >
+          Reservar turno
+        </button>
+        <button
+          type="button"
+          className={`${styles.tab} ${tab === 'admin' ? styles.tabActive : ''}`}
+          onClick={() => setTab('admin')}
+        >
+          Panel admin
+        </button>
+      </nav>
+
+      <main className={styles.main}>
+        {tab === 'reservar' ? (
+          <BookingForm isSlotOccupied={isSlotOccupied} onSubmit={handleSubmit} />
+        ) : (
+          <AdminPanel bookings={bookings} onDelete={handleDelete} />
+        )}
+      </main>
+    </div>
+  )
+}

@@ -1,0 +1,85 @@
+.card {
+  background: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.cardTitle {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 14px;
+  color: #1a1a1a;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.formGroup:last-child {
+  margin-bottom: 0;
+}
+
+.formGroup label {
+  font-size: 13px;
+  color: #666;
+}
+
+.formGroup input {
+  font-size: 14px;
+  padding: 9px 11px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #1a1a1a;
+  font-family: inherit;
+  transition: border-color 0.15s;
+  outline: none;
+}
+
+.formGroup input:focus {
+  border-color: #1D9E75;
+}
+
+.btnPrimary {
+  width: 100%;
+  padding: 13px;
+  background: #1D9E75;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  font-family: inherit;
+  margin-top: 4px;
+}
+
+.btnPrimary:hover {
+  background: #0F6E56;
+}
+
+.btnPrimary:active {
+  transform: scale(0.99);
+}
+
+.errorMsg {
+  font-size: 13px;
+  color: #A32D2D;
+  background: #FCEBEB;
+  border-radius: 8px;
+  padding: 9px 12px;
+  margin-bottom: 10px;
+}
